@@ -4,24 +4,30 @@
 
 This repository contains the code for a Rock, Paper, Scissors game built using Vite, React, TypeScript, and Tailwind CSS. The game allows the player to choose between Rock, Paper, and Scissors and compete against the computer.
 
-## Features
-
+## Specifications
 - Player starts with a balance of 5000.
-- Each bet should be 500 (player can place several bets on any position: 500, 1000, 1500, etc).
-- Player can not bet on more than 2 positions per one game.
-- Winning rate for a bet on 1 position is 14.
-- Winning rate for a bet on 2 positions is 3.
-- The game displays the player's current balance and allows them to place bets on Rock, Paper, or Scissors.
-- After the player places their bets, the computer randomly selects Rock, Paper, or Scissors as its choice.
-- The player's choice is compared to the computer's choice, and the game determines the winner based on the rules of Rock, Paper, Scissors.
-- If the player wins, they receive a return of 14 times their bet if they bet on one position or 3 times their bet if they bet on two positions.
-- If the player loses, their bet is deducted from their balance.
-- If there is a tie, the player's bet is returned to them.
-- The game updates the player's balance after each round.
-- The player cannot place a bet if their balance is less than the amount they want to bet.
+- Each bet should be 500 (player can place several bets on any position: 500, 1000,
+1500 etc)
+- Player can not bet more than 2 positions per one game
+- Winning rate for bet on 1 position is 14
+- Winning rate for bet on 2 positions is 3
+
+## Requirements
+- There should be three betting positions, rock, paper, scissors.
+- Player can bet on rock, paper, or scissors, but not on all three at the same time.
+- The bet is reduced from the balance.
+- When betting done button is clicked, the computer runs a random paper, scissors,
+rock match.
+- Player choice should be compared to computers choice and only one bet can win –
+every tie counts as loss
+- If player bets on one of them and wins, the return is 14 times the bet.
+- If player bets on two of them and wins the return is 3 times the bet.
+- Loss bets are not returned to player
+- Bets with tie result are returned to player
+- After round ends the return adds to the balance
+- Player cannot bet if player has less balance than available for bet.
 
 ## Technologies Used
-
 - Vite: A build tool for modern web development with blazing-fast development and build times.
 - React: A JavaScript library for building user interfaces.
 - TypeScript: A typed superset of JavaScript that compiles to plain JavaScript.
