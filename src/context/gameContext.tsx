@@ -2,6 +2,8 @@ import React, { createContext, useState } from "react";
 
 type GameContextType = {
   balance: number;
+  wins: number;
+  position:number;
   bets: { [key: string]: number };
   result: string | null;
   placeBet: (position: string, amount: number) => void;
@@ -10,6 +12,8 @@ type GameContextType = {
 
 const GameContext = createContext<GameContextType>({
   balance: 5000,
+  wins: 0,
+  position:0,
   bets: {},
   result: null,
   placeBet: () => {},
@@ -20,7 +24,8 @@ const GameProvider: React.FC = ({ children }) => {
   const [balance, setBalance] = useState(5000);
   const [bets, setBets] = useState<{ [key: string]: number }>({});
   const [result, setResult] = useState<string | null>(null);
-
+  const [wins, setWins] = useState(0);
+  
   const placeBet = (position: string, amount: number) => {
     // Update bets state
     setBets((prevBets) => ({
@@ -36,11 +41,12 @@ const GameProvider: React.FC = ({ children }) => {
     // Generate random computer choice
     const choices = ["rock", "paper", "scissors"];
     const computerChoice = choices[Math.floor(Math.random() * choices.length)];
-
+console.log(computerChoice);
     // Determine winner
     let winner = null;
     if (bets[computerChoice]) {
       winner = computerChoice;
+      console.log(winner, bets[computerChoice]);
     }
 
     // Update result state
@@ -58,9 +64,7 @@ const GameProvider: React.FC = ({ children }) => {
   };
 
   return (
-    <GameContext.Provider
-      value={{ balance, bets, result, placeBet, runGame }}
-    >
+    <GameContext.Provider value={{ balance, bets, result, placeBet, runGame }}>
       {children}
     </GameContext.Provider>
   );

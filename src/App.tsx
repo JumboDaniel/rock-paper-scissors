@@ -2,15 +2,14 @@ import "./App.css";
 import { useContext } from "react";
 import { GameContext } from "./context/gameContext";
 import Header from "./components/header";
+import BetItems from "./components/betItems";
+
 function App() {
   const { balance } = useContext(GameContext);
   return (
     <section>
-      <Header/>
-      <h1 className="text-3xl text-blue-300 font-bold underline">
-        Hello world!
-        {balance}
-      </h1>
+      <Header balance={balance}/>
+      <BetItems/>
     </section>
   );
 }
