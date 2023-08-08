@@ -19,7 +19,7 @@ rock match.
 - Player choice should be compared to computers choice and only one bet can win –
 every tie counts as loss
 - If player bets on one of them and wins, the return is 14 times the bet.
-- If player bets ontwo of them and wins the return is 3 times the bet.
+- If player bets on two of them and wins the return is 3 times the bet.
 - Loss bets are not returned to player
 - Bets with tie result are returned to player
 - After round ends the return adds to the balance

@@ -1,19 +1,41 @@
 import Chip from "./chip";
 //node modules
-import { useEffect, useState, useContext } from "react";
+import {useState, useContext } from "react";
 import { GameContext } from "../context/gameContext";
+import BetState from "./betState";
+
+type PositionProps = {
+  clickHandler: (name: string) => void;
+  active: boolean;
+  clickCounts: { [key: string]: number };
+};
 const BetItems = () => {
   //consume the context
-  const { title, startGame } = useContext(GameContext);
+  const { startGame, balance } = useContext(GameContext);
   const [position, setPosition] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  
+
   const [clickCounts, setClickCounts] = useState<{ [key: string]: number }>({
     rock: 0,
     paper: 0,
     scissors: 0,
   });
-  // useEffect(() => {
-  //   console.log(clickCounts.rock);
-  // }, [clickCounts]);
+  const handleGameStart = () => {
+    const calculatePrices = Object.values(clickCounts)
+      .filter((value) => value != 0)
+      .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    const betAmount = calculatePrices * 500;
+    if (position.length === 0) {
+      alert("Fill up your bets");
+      return;
+    }
+    if (balance < betAmount) {
+      alert("Low balance");
+      return;
+    }
+    startGame(position, clickCounts, betAmount);
+  };
   function clickHandler(name: string) {
     // Update click counts if position already includes the current position
     if (position.includes(name)) {
@@ -44,10 +66,7 @@ const BetItems = () => {
   return (
     <section className="flex h-screen  flex-col items-center bg-gray-900">
       <section className="container mx-auto mt-44 flex w-full flex-col items-center justify-center px-8 py-2">
-        <h2 className="py-12 text-4xl font-bold capitalize text-white">
-          {title}
-        </h2>
-
+        <BetState position={position} />
         <h2 className="font-medium text-gold">Pick your positions</h2>
         <div className="flex w-full max-w-2xl gap-4 py-12">
           <Rock
@@ -69,7 +88,7 @@ const BetItems = () => {
       </section>
       <section>
         <button
-          onClick={() => startGame(position, clickCounts)}
+          onClick={() => handleGameStart()}
           className="rounded-full border border-gold bg-slate-800 px-12 py-6 font-medium text-gold"
         >
           Play
@@ -81,7 +100,11 @@ const BetItems = () => {
 
 export default BetItems;
 
-const Rock = ({ clickHandler, active, clickCounts }) => {
+const Rock: React.FC<PositionProps> = ({
+  clickHandler,
+  active,
+  clickCounts,
+}) => {
   return (
     <div
       className="flex min-h-[130px] w-1/3 cursor-pointer flex-col items-center justify-end gap-6 rounded-md border border-blue-500 bg-darkBlue px-4 py-5 shadow-xl"
@@ -92,7 +115,11 @@ const Rock = ({ clickHandler, active, clickCounts }) => {
     </div>
   );
 };
-const Scissors = ({ clickHandler, active, clickCounts }) => {
+const Scissors: React.FC<PositionProps> = ({
+  clickHandler,
+  active,
+  clickCounts,
+}) => {
   return (
     <div
       className="flex min-h-[130px] w-1/3 cursor-pointer flex-col items-center justify-end gap-6 rounded-md border border-red-500 bg-red-900 px-4 py-5 shadow-xl"
@@ -103,7 +130,11 @@ const Scissors = ({ clickHandler, active, clickCounts }) => {
     </div>
   );
 };
-const Paper = ({ clickHandler, active, clickCounts }) => {
+const Paper: React.FC<PositionProps> = ({
+  clickHandler,
+  active,
+  clickCounts,
+}) => {
   return (
     <div
       className="flex min-h-[130px] w-1/3 cursor-pointer flex-col items-center justify-end gap-6 rounded-md border border-green-500 bg-green-800 px-4 py-5 shadow-xl"

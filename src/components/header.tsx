@@ -1,5 +1,9 @@
+import {useContext} from 'react'
+import { GameContext } from "../context/gameContext";
 
-const Header = ({balance}) => {
+const Header = () => {
+  const { balance, bets,wins } = useContext(GameContext);
+
   return (
     <section className="bg-black">
       <section className="container mx-auto w-full px-8 py-2">
@@ -8,13 +12,13 @@ const Header = ({balance}) => {
             <p className="text-gold">Balance:</p>
             <p className="text-white">{balance}</p>
           </div>
-          <div>
-            <p className="text-gold">Bet:</p>
-            <p className="text-white"></p>
+          <div className="flex gap-2">
+            <p className="text-gold">Bets:</p>
+            <p className="text-white">{bets}</p>
           </div>
-          <div>
+          <div className="flex gap-2">
             <p className="text-gold">Win:</p>
-            <p className="text-white"></p>
+            <p className="text-white">{wins}</p>
           </div>
         </section>
       </section>
