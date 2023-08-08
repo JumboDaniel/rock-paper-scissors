@@ -1,13 +1,14 @@
-import './App.css'
+import "./App.css";
+import Header from "./components/header";
+import BetItems from "./components/betItems";
 
 function App() {
   return (
-    <>
-      <h1 className="text-3xl text-blue-300 font-bold underline">
-      Hello world!
-    </h1>
-    </>
-  )
+    <section>
+      <Header/>
+      <BetItems/>
+    </section>
+  );
 }
 
-export default App
+export default App;
