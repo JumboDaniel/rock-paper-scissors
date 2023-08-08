@@ -7,7 +7,6 @@ type GameContextType = {
   result: "win" | "loss" | "draw" | null;
   startGame: (
     position: string[],
-    clickCounts: { [key: string]: number },
     betAmount: number,
   ) => void;
   computer: string;
@@ -78,7 +77,6 @@ const GameProvider: React.FC<{ children: React.ReactNode }> = ({
   };
   const startGame = (
     position: string[],
-    clickCounts: { [key: string]: number },
     betAmount: number,
   ) => {
     // Generate random computer choice

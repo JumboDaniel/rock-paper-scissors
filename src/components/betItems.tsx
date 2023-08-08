@@ -1,6 +1,6 @@
 import Chip from "./chip";
 //node modules
-import {useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { GameContext } from "../context/gameContext";
 import BetState from "./betState";
 
@@ -12,15 +12,18 @@ type PositionProps = {
 const BetItems = () => {
   //consume the context
   const { startGame, balance } = useContext(GameContext);
-  const [position, setPosition] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  
-
-  const [clickCounts, setClickCounts] = useState<{ [key: string]: number }>({
+  //set the default value for clicked counts
+  const defaultCounts = {
     rock: 0,
     paper: 0,
     scissors: 0,
-  });
+  };
+  //set the sate for the component ui logic
+  const [position, setPosition] = useState<string[]>([]);
+  const [startClicked, setStartClicked] = useState(false);
+  const [clickCounts, setClickCounts] = useState<{ [key: string]: number }>(
+    defaultCounts,
+  );
   const handleGameStart = () => {
     const calculatePrices = Object.values(clickCounts)
       .filter((value) => value != 0)
@@ -34,7 +37,8 @@ const BetItems = () => {
       alert("Low balance");
       return;
     }
-    startGame(position, clickCounts, betAmount);
+    setStartClicked(true);
+    startGame(position, betAmount);
   };
   function clickHandler(name: string) {
     // Update click counts if position already includes the current position
@@ -66,8 +70,12 @@ const BetItems = () => {
   return (
     <section className="flex h-screen  flex-col items-center bg-gray-900">
       <section className="container mx-auto mt-44 flex w-full flex-col items-center justify-center px-8 py-2">
-        <BetState position={position} />
-        <h2 className="font-medium text-gold">Pick your positions</h2>
+        {startClicked ? (
+          <BetState position={position} />
+        ) : (
+          <h2 className="font-medium text-gold">Pick your positions</h2>
+        )}
+
         <div className="flex w-full max-w-2xl gap-4 py-12">
           <Rock
             clickHandler={clickHandler}
@@ -87,12 +95,25 @@ const BetItems = () => {
         </div>
       </section>
       <section>
-        <button
-          onClick={() => handleGameStart()}
-          className="rounded-full border border-gold bg-slate-800 px-12 py-6 font-medium text-gold"
-        >
-          Play
-        </button>
+        {!startClicked ? (
+          <button
+            onClick={() => handleGameStart()}
+            className="rounded-full border border-gold bg-slate-800 px-12 py-6 font-medium text-gold"
+          >
+            Play
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              setStartClicked(false);
+              setPosition([]);
+              setClickCounts(defaultCounts);
+            }}
+            className="rounded-full border border-gold bg-slate-800 px-12 py-6 font-medium text-gold"
+          >
+            Clear
+          </button>
+        )}
       </section>
     </section>
   );
