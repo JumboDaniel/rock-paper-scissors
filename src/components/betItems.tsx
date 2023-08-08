@@ -4,7 +4,7 @@ import { useEffect, useState, useContext } from "react";
 import { GameContext } from "../context/gameContext";
 const BetItems = () => {
   //consume the context
-  const { runGame } = useContext(GameContext);
+  const { title, startGame } = useContext(GameContext);
   const [position, setPosition] = useState<string[]>([]);
   const [clickCounts, setClickCounts] = useState<{ [key: string]: number }>({
     rock: 0,
@@ -44,6 +44,10 @@ const BetItems = () => {
   return (
     <section className="flex h-screen  flex-col items-center bg-gray-900">
       <section className="container mx-auto mt-44 flex w-full flex-col items-center justify-center px-8 py-2">
+        <h2 className="py-12 text-4xl font-bold capitalize text-white">
+          {title}
+        </h2>
+
         <h2 className="font-medium text-gold">Pick your positions</h2>
         <div className="flex w-full max-w-2xl gap-4 py-12">
           <Rock
@@ -65,7 +69,7 @@ const BetItems = () => {
       </section>
       <section>
         <button
-          onClick={runGame}
+          onClick={() => startGame(position, clickCounts)}
           className="rounded-full border border-gold bg-slate-800 px-12 py-6 font-medium text-gold"
         >
           Play
